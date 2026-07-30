@@ -30,8 +30,8 @@
     "mongoose-sanitize": "^1.5.0",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
-    "multer-storage-cloudinary": "^4.0.0",
     "pdfkit": "^0.19.1",
+    "uuid": "^9.0.1",
     "xss-clean": "^0.1.4"
   },
   "devDependencies": {

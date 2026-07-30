@@ -13,7 +13,7 @@
  */
 
 const express = require('express');
-const { createUploadMiddleware } = require('../services/cloudinaryService');
+const { createUploadMiddleware, uploadImageFromBuffer } = require('../services/cloudinaryService');
 const authenticate = require('../middleware/auth');
 
 const router = express.Router();
@@ -22,7 +22,7 @@ const router = express.Router();
 router.use(authenticate);
 
 // Upload phone images
-router.post('/phone', createUploadMiddleware('phoneshield/phones', 5), (req, res) => {
+router.post('/phone', createUploadMiddleware('phoneshield/phones', 5), async (req, res) => {
   try {
     if (!req.files || req.files.length === 0) {
       return res.status(400).json({
@@ -31,7 +31,13 @@ router.post('/phone', createUploadMiddleware('phoneshield/phones', 5), (req, res
       });
     }
 
-    const imageUrls = req.files.map((file) => file.path);
+    // Upload each file to Cloudinary
+    const uploadPromises = req.files.map((file) => {
+      return uploadImageFromBuffer(file.buffer, 'phoneshield/phones');
+    });
+
+    const results = await Promise.all(uploadPromises);
+    const imageUrls = results.map((result) => result.secure_url);
 
     return res.status(200).json({
       success: true,
@@ -48,7 +54,7 @@ router.post('/phone', createUploadMiddleware('phoneshield/phones', 5), (req, res
 });
 
 // Upload seller documents
-router.post('/seller', createUploadMiddleware('phoneshield/sellers', 5), (req, res) => {
+router.post('/seller', createUploadMiddleware('phoneshield/sellers', 5), async (req, res) => {
   try {
     if (!req.files || req.files.length === 0) {
       return res.status(400).json({
@@ -57,7 +63,13 @@ router.post('/seller', createUploadMiddleware('phoneshield/sellers', 5), (req, r
       });
     }
 
-    const imageUrls = req.files.map((file) => file.path);
+    // Upload each file to Cloudinary
+    const uploadPromises = req.files.map((file) => {
+      return uploadImageFromBuffer(file.buffer, 'phoneshield/sellers');
+    });
+
+    const results = await Promise.all(uploadPromises);
+    const imageUrls = results.map((result) => result.secure_url);
 
     return res.status(200).json({
       success: true,
@@ -74,7 +86,7 @@ router.post('/seller', createUploadMiddleware('phoneshield/sellers', 5), (req, r
 });
 
 // Upload customer documents
-router.post('/customer', createUploadMiddleware('phoneshield/customers', 5), (req, res) => {
+router.post('/customer', createUploadMiddleware('phoneshield/customers', 5), async (req, res) => {
   try {
     if (!req.files || req.files.length === 0) {
       return res.status(400).json({
@@ -83,7 +95,13 @@ router.post('/customer', createUploadMiddleware('phoneshield/customers', 5), (re
       });
     }
 
-    const imageUrls = req.files.map((file) => file.path);
+    // Upload each file to Cloudinary
+    const uploadPromises = req.files.map((file) => {
+      return uploadImageFromBuffer(file.buffer, 'phoneshield/customers');
+    });
+
+    const results = await Promise.all(uploadPromises);
+    const imageUrls = results.map((result) => result.secure_url);
 
     return res.status(200).json({
       success: true,
@@ -100,7 +118,7 @@ router.post('/customer', createUploadMiddleware('phoneshield/customers', 5), (re
 });
 
 // Upload repair images
-router.post('/repair', createUploadMiddleware('phoneshield/repairs', 5), (req, res) => {
+router.post('/repair', createUploadMiddleware('phoneshield/repairs', 5), async (req, res) => {
   try {
     if (!req.files || req.files.length === 0) {
       return res.status(400).json({
@@ -109,7 +127,13 @@ router.post('/repair', createUploadMiddleware('phoneshield/repairs', 5), (req, r
       });
     }
 
-    const imageUrls = req.files.map((file) => file.path);
+    // Upload each file to Cloudinary
+    const uploadPromises = req.files.map((file) => {
+      return uploadImageFromBuffer(file.buffer, 'phoneshield/repairs');
+    });
+
+    const results = await Promise.all(uploadPromises);
+    const imageUrls = results.map((result) => result.secure_url);
 
     return res.status(200).json({
       success: true,
