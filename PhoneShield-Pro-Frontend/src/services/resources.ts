@@ -10,7 +10,8 @@ export const idOf = (item: Identified | undefined | null) =>
   String(item?._id ?? item?.id ?? "");
 
 /** Generic REST resource helper — one place for every CRUD call. */
-function resource(path: string, listKey?: string) {
+function resource(path: string, listKey: string, singleKey?: string) {
+  const key = singleKey || listKey.replace(/s$/, '');
   return {
     list: async (params?: Record<string, any>) => {
       const { data } = await api.get(path, { params });
@@ -22,19 +23,18 @@ function resource(path: string, listKey?: string) {
     },
     get: async (id: string) => {
       const { data } = await api.get(`${path}/${id}`);
-      return unwrap<Identified>(data);
+      // Backend returns { success: true, phone: { ... } } or { success: true, data: { ... } }
+      return unwrap<Identified>(data, key);
     },
     create: async (payload: any) => {
       const { data } = await api.post(path, payload);
-      return unwrap<Identified>(data);
+      // Backend returns { success: true, phone: { ... } }
+      return unwrap<Identified>(data, key);
     },
     update: async (id: string, payload: any) => {
       const { data } = await api.put(`${path}/${id}`, payload);
-      return unwrap<Identified>(data);
-    },
-    patch: async (id: string, payload: any) => {
-      const { data } = await api.patch(`${path}/${id}`, payload);
-      return unwrap<Identified>(data);
+      // Backend returns { success: true, phone: { ... } }
+      return unwrap<Identified>(data, key);
     },
     remove: async (id: string) => {
       const { data } = await api.delete(`${path}/${id}`);
@@ -43,10 +43,10 @@ function resource(path: string, listKey?: string) {
   };
 }
 
-export const phonesService = resource("/phones", "phones");
-export const sellersService = resource("/sellers", "sellers");
-export const customersService = resource("/customers", "customers");
-export const repairsService = resource("/repairs", "repairs");
+export const phonesService = resource("/phones", "phones", "phone");
+export const sellersService = resource("/sellers", "sellers", "seller");
+export const customersService = resource("/customers", "customers", "customer");
+export const repairsService = resource("/repairs", "repairs", "repair");
 // Invoices are generated, not CRUD - backend has /api/invoice/sale/:id and /api/invoice/repair/:id
 export const invoicesService = {
   getSaleInvoice: async (phoneId: string) => {
@@ -66,7 +66,8 @@ export const authService = {
   },
   me: async () => {
     const { data } = await api.get("/auth/profile");
-    return unwrap<Identified>(data);
+    // Backend returns { success: true, user: { ... } }
+    return unwrap<Identified>(data, "user");
   },
   forgotPassword: async (email: string) => {
     const { data } = await api.post("/auth/forgot-password", { email });
@@ -85,7 +86,9 @@ export const authService = {
 export const dashboardService = {
   stats: async () => {
     const { data } = await api.get("/dashboard");
-    return unwrap<Record<string, any>>(data);
+    // Backend returns { success: true, dashboard: { ... } }
+    // Extract the dashboard key if present
+    return unwrap<Record<string, any>>(data, "dashboard");
   },
 };
 
