@@ -47,8 +47,17 @@ export const phonesService = resource("/phones", "phones");
 export const sellersService = resource("/sellers", "sellers");
 export const customersService = resource("/customers", "customers");
 export const repairsService = resource("/repairs", "repairs");
-export const invoicesService = resource("/invoices", "invoices");
-export const usersService = resource("/users", "users");
+// Invoices are generated, not CRUD - backend has /api/invoice/sale/:id and /api/invoice/repair/:id
+export const invoicesService = {
+  getSaleInvoice: async (phoneId: string) => {
+    const { data } = await api.get(`/invoice/sale/${phoneId}`);
+    return data;
+  },
+  getRepairInvoice: async (repairId: string) => {
+    const { data } = await api.get(`/invoice/repair/${repairId}`);
+    return data;
+  },
+};
 
 export const authService = {
   login: async (payload: { email: string; password: string }) => {
@@ -56,7 +65,7 @@ export const authService = {
     return data;
   },
   me: async () => {
-    const { data } = await api.get("/auth/me");
+    const { data } = await api.get("/auth/profile");
     return unwrap<Identified>(data);
   },
   forgotPassword: async (email: string) => {
@@ -75,14 +84,26 @@ export const authService = {
 
 export const dashboardService = {
   stats: async () => {
-    const { data } = await api.get("/dashboard/stats");
+    const { data } = await api.get("/dashboard");
     return unwrap<Record<string, any>>(data);
   },
 };
 
 export const reportsService = {
-  sales: async (params?: Record<string, any>) => {
-    const { data } = await api.get("/reports/sales", { params });
+  daily: async (params?: Record<string, any>) => {
+    const { data } = await api.get("/reports/daily", { params });
+    return unwrap<any>(data);
+  },
+  weekly: async (params?: Record<string, any>) => {
+    const { data } = await api.get("/reports/weekly", { params });
+    return unwrap<any>(data);
+  },
+  monthly: async (params?: Record<string, any>) => {
+    const { data } = await api.get("/reports/monthly", { params });
+    return unwrap<any>(data);
+  },
+  profit: async (params?: Record<string, any>) => {
+    const { data } = await api.get("/reports/profit", { params });
     return unwrap<any>(data);
   },
   repairs: async (params?: Record<string, any>) => {
@@ -91,6 +112,14 @@ export const reportsService = {
   },
   inventory: async (params?: Record<string, any>) => {
     const { data } = await api.get("/reports/inventory", { params });
+    return unwrap<any>(data);
+  },
+  topBrands: async (params?: Record<string, any>) => {
+    const { data } = await api.get("/reports/top-brands", { params });
+    return unwrap<any>(data);
+  },
+  topSellers: async (params?: Record<string, any>) => {
+    const { data } = await api.get("/reports/top-sellers", { params });
     return unwrap<any>(data);
   },
 };

@@ -9,64 +9,37 @@ export interface UploadedImage {
 }
 
 /**
- * Upload image to Cloudinary
- * Requires VITE_CLOUDINARY_CLOUD_NAME and VITE_CLOUDINARY_UPLOAD_PRESET environment variables
+ * Upload image using backend upload endpoints
  */
-export async function uploadImage(file: File): Promise<UploadedImage> {
-  const cloudName = (import.meta as any).env?.VITE_CLOUDINARY_CLOUD_NAME;
-  const uploadPreset = (import.meta as any).env?.VITE_CLOUDINARY_UPLOAD_PRESET;
-
-  if (!cloudName || !uploadPreset) {
-    throw new Error("Cloudinary configuration missing. Please set VITE_CLOUDINARY_CLOUD_NAME and VITE_CLOUDINARY_UPLOAD_PRESET.");
-  }
-
+export async function uploadImage(file: File, type: 'phone' | 'seller' | 'customer' | 'repair'): Promise<UploadedImage> {
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("upload_preset", uploadPreset);
 
-  const response = await fetch(
-    `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-    {
-      method: "POST",
-      body: formData,
-    }
-  );
+  const response = await api.post(`/upload/${type}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error?.message || "Failed to upload image");
+  const data = response.data;
+  if (!data.success || !data.images || data.images.length === 0) {
+    throw new Error(data.message || "Failed to upload image");
   }
 
-  const data = await response.json();
+  const imageUrl = data.images[0];
   return {
-    url: data.secure_url,
-    publicId: data.public_id,
-    width: data.width,
-    height: data.height,
-    format: data.format,
+    url: imageUrl,
+    publicId: "",
+    width: 0,
+    height: 0,
+    format: "",
   };
 }
 
 /**
- * Upload multiple images to Cloudinary
+ * Upload multiple images using backend upload endpoints
  */
-export async function uploadImages(files: File[]): Promise<UploadedImage[]> {
-  const uploads = files.map((file) => uploadImage(file));
+export async function uploadImages(files: File[], type: 'phone' | 'seller' | 'customer' | 'repair'): Promise<UploadedImage[]> {
+  const uploads = files.map((file) => uploadImage(file, type));
   return Promise.all(uploads);
-}
-
-/**
- * Delete image from Cloudinary
- */
-export async function deleteImage(publicId: string): Promise<void> {
-  const cloudName = (import.meta as any).env?.VITE_CLOUDINARY_CLOUD_NAME;
-  const uploadPreset = (import.meta as any).env?.VITE_CLOUDINARY_UPLOAD_PRESET;
-
-  if (!cloudName || !uploadPreset) {
-    throw new Error("Cloudinary configuration missing.");
-  }
-
-  // Note: Deletion requires server-side implementation with API secret
-  // This is a placeholder for client-side deletion logic
-  console.warn("Image deletion requires server-side implementation");
 }
