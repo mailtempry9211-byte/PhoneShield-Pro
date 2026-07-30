@@ -1,0 +1,92 @@
+{
+  "User": [
+    {
+      "_id": "6a69d06be4abf5de56c97729",
+      "name": "Mobin",
+      "email": "admin@phoneshield.com",
+      "phone": "9876543210",
+      "role": "admin",
+      "createdAt": "2026-07-29T10:05:31.687Z",
+      "updatedAt": "2026-07-29T10:05:31.687Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a69d6326550031a7b108c6a",
+      "name": "Test User",
+      "email": "testuser@example.com",
+      "phone": "9876543210",
+      "role": "admin",
+      "createdAt": "2026-07-29T10:30:10.445Z",
+      "updatedAt": "2026-07-29T10:30:10.445Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a69d921c76c44cbbbb937d1",
+      "name": "Test",
+      "email": "test@test.com",
+      "phone": "123",
+      "role": "admin",
+      "createdAt": "2026-07-29T10:42:41.743Z",
+      "updatedAt": "2026-07-29T10:42:41.743Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a6af02902fb49fdcaf856d1",
+      "name": "Test User",
+      "email": "testuser_1785393193069@example.com",
+      "phone": "9876543210",
+      "role": "admin",
+      "createdAt": "2026-07-30T06:33:13.610Z",
+      "updatedAt": "2026-07-30T06:33:13.610Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a6af08d4c2feb88513521f0",
+      "name": "Test User",
+      "email": "testuser_1785393293312@example.com",
+      "phone": "9876543210",
+      "role": "admin",
+      "createdAt": "2026-07-30T06:34:53.856Z",
+      "updatedAt": "2026-07-30T06:34:53.856Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a6af557f42e657f47b5cea4",
+      "name": "Mobin",
+      "email": "mobin@gmail.com",
+      "phone": "9876543210",
+      "role": "admin",
+      "createdAt": "2026-07-30T06:55:19.095Z",
+      "updatedAt": "2026-07-30T06:55:19.095Z",
+      "__v": 0
+    }
+  ],
+  "Phone": [
+    {
+      "_id": "6a6b00e3bc12397bb3ca27bb",
+      "brand": "Apple",
+      "model": "iPhone 14",
+      "imei": "351785397475048",
+      "storage": "128GB",
+      "ram": "6GB",
+      "color": "Blue",
+      "batteryHealth": "95%",
+      "condition": "Excellent",
+      "purchasePrice": 60000,
+      "sellingPrice": 70000,
+      "seller": "Test Seller",
+      "customer": "Test Customer",
+      "status": "sold",
+      "images": [],
+      "invoiceNumber": "INV-001",
+      "notes": "Test phone for invoice",
+      "createdBy": "6a69d06be4abf5de56c97729",
+      "createdAt": "2026-07-30T07:44:35.459Z",
+      "updatedAt": "2026-07-30T07:44:35.459Z",
+      "__v": 0
+    }
+  ],
+  "Seller": [],
+  "Customer": [],
+  "Repair": []
+}

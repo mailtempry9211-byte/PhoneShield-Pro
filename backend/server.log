@@ -1,0 +1,23 @@
+PhoneShield Pro Backend Running on port 5000
+MongoDB Connected: ac-rsjh37f-shard-00-02.ks6ikul.mongodb.net
+[0mPOST /api/auth/login [32m200[0m 586.157 ms - 401[0m
+[0mGET /api/reports/daily [32m200[0m 315.110 ms - 633[0m
+[0mGET /api/reports/weekly [32m200[0m 274.298 ms - 661[0m
+[0mGET /api/reports/monthly [32m200[0m 455.795 ms - 633[0m
+[0mGET /api/reports/profit [32m200[0m 107.077 ms - 124[0m
+[0mGET /api/reports/repairs [32m200[0m 130.287 ms - 126[0m
+[0mGET /api/reports/inventory [32m200[0m 85.487 ms - 638[0m
+[0mGET /api/reports/top-brands [32m200[0m 140.665 ms - 69[0m
+[0mGET /api/reports/top-sellers [32m200[0m 204.273 ms - 43[0m
+[0mGET /api/search?q=test [32m200[0m 456.984 ms - 572[0m
+[0mGET /api/search?q=a [32m200[0m 1.995 ms - 81[0m
+[0mGET /api/backup/stats [32m200[0m 1075.140 ms - 80[0m
+[0mGET /api/backup/export [32m200[0m 806.581 ms - 192[0m
+[0mPOST /api/phones [32m201[0m 518.478 ms - 510[0m
+[0mGET /api/whatsapp/invoice/6a6b06417e3c890cbf266e31 [32m200[0m 97.278 ms - 263[0m
+[0mGET /api/whatsapp/phone/6a6b06417e3c890cbf266e31 [32m200[0m 138.870 ms - 293[0m
+[0mGET /api/whatsapp/receipt/6a6b06417e3c890cbf266e31 [32m200[0m 101.228 ms - 280[0m
+[0mGET /api/pdf/sale/6a6b06417e3c890cbf266e31 [32m200[0m 151.502 ms - 2066[0m
+[0mGET /api/pdf/receipt/6a6b06417e3c890cbf266e31 [32m200[0m 75.209 ms - 1872[0m
+[0mGET /api/pdf/warranty/6a6b06417e3c890cbf266e31 [32m200[0m 106.326 ms - 2077[0m
+[0mPOST /api/upload/phone [33m400[0m 1.019 ms - 48[0m
