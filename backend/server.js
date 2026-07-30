@@ -35,6 +35,9 @@ const compression = require('compression');
 // Import the database connection function
 const connectDB = require('./src/config/db');
 
+// Import the admin seeder utility
+const seedAdmin = require('./src/utils/seedAdmin');
+
 // Import the main API router (aggregates all route modules)
 const apiRoutes = require('./src/routes');
 
@@ -47,7 +50,10 @@ const app = express();
 
 // --- Database Connection ---
 // Connect to MongoDB using the connection string from .env
-connectDB();
+connectDB().then(() => {
+  // Seed the default admin user after successful database connection
+  seedAdmin();
+});
 
 // --- Middleware ---
 

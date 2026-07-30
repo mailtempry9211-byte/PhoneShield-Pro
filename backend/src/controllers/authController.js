@@ -90,11 +90,13 @@ exports.register = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     // --- Create User ---
+    // Force role to be "user" - registration endpoint cannot create admin/staff accounts
     const user = await User.create({
       name,
       email: email.toLowerCase(),
       password: hashedPassword,
       phone,
+      role: 'user',
     });
 
     // --- Generate JWT Token ---

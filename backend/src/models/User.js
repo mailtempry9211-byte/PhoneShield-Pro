@@ -52,11 +52,11 @@ const userSchema = new mongoose.Schema(
       trim: true,
     },
 
-    // Role-based access control (admin or staff, defaults to admin)
+    // Role-based access control (admin, staff, or user, defaults to user)
     role: {
       type: String,
-      enum: ['admin', 'staff'],
-      default: 'admin',
+      enum: ['admin', 'staff', 'user'],
+      default: 'user',
     },
   },
   {
